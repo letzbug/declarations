@@ -1,0 +1,1052 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>UniPop · Déclarations formateurs</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🗂️</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#EDF0F4; --surface:#FFFFFF; --surface-2:#F6F8FA; --ink:#18222F; --muted:#5B687A; --line:#D8DEE6;
+  --brand:#0D4A72; --brand-ink:#FFFFFF; --brand-soft:#E3EEF6;
+  --clo:#1D8A57; --clo-soft:#DDF2E6; --att:#DE9C14; --att-soft:#FBF0D6; --na:#9AA4B1; --na-soft:#ECEFF3;
+  --danger:#B42318; --focus:#2E7CC2; --now:#FFF6DA;
+  --radius:10px;
+  --font:"Gotham","Montserrat",system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme:dark){ :root:not([data-theme="light"]){
+  --bg:#121821; --surface:#1A222D; --surface-2:#212B37; --ink:#E7ECF2; --muted:#9AA7B8; --line:#2E3A48;
+  --brand:#5AA7DB; --brand-ink:#0B1622; --brand-soft:#1E3346;
+  --clo:#3DBB7E; --clo-soft:#173A2A; --att:#F0B43A; --att-soft:#3D3115; --na:#6F7B8B; --na-soft:#26303B;
+  --danger:#F07167; --now:#2C2A1A;
+}}
+:root[data-theme="dark"]{
+  --bg:#121821; --surface:#1A222D; --surface-2:#212B37; --ink:#E7ECF2; --muted:#9AA7B8; --line:#2E3A48;
+  --brand:#5AA7DB; --brand-ink:#0B1622; --brand-soft:#1E3346;
+  --clo:#3DBB7E; --clo-soft:#173A2A; --att:#F0B43A; --att-soft:#3D3115; --na:#6F7B8B; --na-soft:#26303B;
+  --danger:#F07167; --now:#2C2A1A;
+}
+*,*::before,*::after{box-sizing:inherit}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+html,body{height:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--font);font-size:14px;line-height:1.45;-webkit-font-smoothing:antialiased;display:flex;flex-direction:column;min-height:100%}
+button,input,select{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--focus);outline-offset:2px}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+
+/* ---------- Header ---------- */
+header{background:var(--brand);color:var(--brand-ink);position:sticky;top:0;z-index:30}
+.bar{display:flex;align-items:center;gap:16px;padding:14px 24px 0;flex-wrap:wrap}
+.title{display:flex;align-items:baseline;gap:12px;margin-right:auto}
+.title h1{font-size:19px;font-weight:700;margin:0;letter-spacing:-.01em}
+.title .year{font-size:15px;font-weight:500;opacity:.8}
+.file{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.filestate{display:flex;align-items:center;gap:8px;font-size:13px;padding:6px 12px;border-radius:99px;background:rgba(255,255,255,.12);max-width:340px}
+.filestate span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.dot{width:8px;height:8px;border-radius:50%;background:#9FB3C8;flex:none}
+.dot.ok{background:#56D69A}.dot.dirty{background:#F5C451}.dot.warn{background:#FF8A80}
+.hbtn{border:0;background:rgba(255,255,255,.14);color:inherit;padding:7px 13px;border-radius:8px;cursor:pointer;font-weight:600;font-size:13px}
+.hbtn:hover{background:rgba(255,255,255,.24)}
+.hbtn.solid{background:var(--brand-ink);color:var(--brand)}
+nav{display:flex;gap:4px;padding:12px 24px 0;overflow-x:auto}
+nav button{border:0;background:none;color:inherit;opacity:.75;padding:10px 16px 12px;font-weight:600;cursor:pointer;border-radius:10px 10px 0 0;white-space:nowrap}
+nav button:hover{opacity:1}
+nav button[aria-selected="true"]{opacity:1;background:var(--bg);color:var(--ink)}
+nav .count{font-weight:500;opacity:.6;margin-left:6px}
+
+/* ---------- Synchronisation discrète ---------- */
+.sync-pill{display:inline-flex;align-items:center;gap:7px;padding:6px 11px;border-radius:999px;border:1px solid var(--line);background:var(--surface);font-size:12px;color:var(--muted);white-space:nowrap;max-width:100%;cursor:pointer}
+.sync-pill:hover{border-color:var(--focus)}
+.sync-pill i{width:8px;height:8px;flex:none;border-radius:50%;background:var(--na)}
+.sync-pill[data-state="ok"] i{background:var(--clo)}
+.sync-pill[data-state="busy"] i{background:var(--att)}
+.sync-pill[data-state="error"] i{background:var(--danger)}
+.sync-pill span{overflow:hidden;text-overflow:ellipsis}
+@media(max-width:600px){.sync-pill{max-width:100%}}
+
+/* ---------- Layout ---------- */
+main{flex:1;padding:24px;max-width:1700px;width:100%;margin:0 auto}
+.view[hidden]{display:none}
+.toolbar{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin-bottom:16px}
+.toolbar .grow{flex:1}
+h2{font-size:17px;margin:0 0 4px;font-weight:700}
+.lede{color:var(--muted);margin:0 0 18px;max-width:70ch}
+.field{display:flex;align-items:center;gap:8px;background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:0 12px;min-width:240px}
+.field input{border:0;background:none;padding:9px 0;outline:none;width:100%}
+.field svg{flex:none;opacity:.5}
+.btn{border:1px solid var(--line);background:var(--surface);padding:8px 14px;border-radius:8px;cursor:pointer;font-weight:600;font-size:13px;white-space:nowrap}
+.btn:hover{border-color:var(--muted)}
+.btn.primary{background:var(--brand);border-color:var(--brand);color:var(--brand-ink)}
+.btn.danger{color:var(--danger)}
+.chips{display:flex;gap:6px;flex-wrap:wrap}
+.chip{border:1px solid var(--line);background:var(--surface);padding:6px 12px;border-radius:99px;cursor:pointer;font-size:13px;font-weight:500}
+.chip[aria-pressed="true"]{background:var(--ink);color:var(--surface);border-color:var(--ink)}
+
+/* ---------- Legend ---------- */
+.legend{display:flex;gap:18px;flex-wrap:wrap;align-items:center;font-size:13px;color:var(--muted);margin-bottom:12px}
+.legend .item{display:flex;align-items:center;gap:6px}
+.legend .sw{width:14px;height:14px;border-radius:4px;border:1px solid var(--line)}
+.legend .hint{margin-left:auto}
+
+/* ---------- Grid table ---------- */
+.gridwrap{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);overflow:auto;max-height:calc(100vh - 290px);min-height:240px}
+table.grid{border-collapse:separate;border-spacing:0;width:max-content;min-width:100%}
+.grid th,.grid td{padding:0;border-bottom:1px solid var(--line);vertical-align:middle}
+.grid thead th{position:sticky;top:0;background:var(--surface-2);z-index:2;font-size:12px;font-weight:600;color:var(--muted);text-align:center;padding:10px 6px;white-space:nowrap}
+.grid thead th.now{background:var(--now);color:var(--ink)}
+.grid .name{position:sticky;left:0;z-index:1;background:var(--surface);text-align:left;padding:8px 14px;min-width:230px;max-width:260px;border-right:1px solid var(--line)}
+.grid thead .name{z-index:3;background:var(--surface-2)}
+.grid .rem{min-width:190px;padding:4px 8px;border-right:1px solid var(--line)}
+.grid tbody tr:hover td{background:var(--surface-2)}
+.grid tbody tr:hover .name{background:var(--surface-2)}
+.grid td.per{padding:6px 7px;text-align:center}
+.grid td.per.now{background:var(--now)}
+.grid tbody tr:hover td.per.now{background:var(--now)}
+.nm{display:flex;align-items:center;gap:8px}
+.nm b{font-weight:600}
+.nm .first{font-weight:400}
+.nm .x{margin-left:auto;border:0;background:none;cursor:pointer;color:var(--muted);font-size:18px;line-height:1;padding:2px 6px;border-radius:6px;opacity:0}
+tr:hover .nm .x,.nm .x:focus{opacity:1}
+.nm .x:hover{color:var(--danger);background:var(--na-soft)}
+.badge-done{display:inline-flex;align-items:center;gap:4px;font-size:11px;font-weight:600;color:var(--clo);background:var(--clo-soft);padding:2px 8px;border-radius:99px;white-space:nowrap}
+.rem input{width:100%;border:1px solid transparent;background:transparent;padding:6px 8px;border-radius:6px;font-size:13px}
+.rem input:hover{border-color:var(--line)}
+.rem input:focus{border-color:var(--focus);background:var(--surface);outline:none}
+.rem input.inherited{color:var(--muted)}
+.mhead{border:0;background:none;cursor:pointer;font:inherit;color:inherit;padding:2px 6px;border-radius:6px}
+.mhead:hover{background:var(--line)}
+.mhead small{display:block;font-weight:500;opacity:.7;font-size:10px;letter-spacing:.04em}
+
+/* The capsule: three steps of one period */
+.cap{display:inline-flex;border-radius:9px;padding:2px;gap:2px;background:var(--surface-2);border:1px solid var(--line);position:relative}
+.seg{width:24px;height:26px;border:0;border-radius:6px;cursor:pointer;font-size:11px;font-weight:700;display:grid;place-items:center;background:var(--surface);color:var(--muted);box-shadow:inset 0 0 0 1px var(--line);transition:background .12s,color .12s,transform .08s}
+.seg:active{transform:scale(.92)}
+.seg[data-s="En attente"]{background:var(--att);color:#3A2800;box-shadow:none}
+.seg[data-s="Clôturé"]{background:var(--clo);color:#fff;box-shadow:none}
+.seg[data-s="N/A"]{background:var(--na-soft);color:var(--na);box-shadow:none;text-decoration:line-through}
+.cap.done{border-color:var(--clo);background:var(--clo-soft)}
+.cap.done::after{content:"";position:absolute;top:-6px;right:-6px;width:14px;height:14px;border-radius:50%;background:var(--clo) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M4 8.5l2.5 2.5L12 5.5' fill='none' stroke='white' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center/12px no-repeat;border:2px solid var(--surface)}
+@media (prefers-reduced-motion:reduce){.seg{transition:none}.seg:active{transform:none}}
+
+/* ---------- Add trainer combobox ---------- */
+.combo{position:relative;min-width:320px}
+.combo .list{position:absolute;top:calc(100% + 4px);left:0;right:0;background:var(--surface);border:1px solid var(--line);border-radius:10px;box-shadow:0 12px 32px rgba(15,30,50,.16);list-style:none;margin:0;padding:6px;z-index:20;max-height:320px;overflow:auto}
+.combo .list li{padding:8px 10px;border-radius:7px;cursor:pointer;display:flex;justify-content:space-between;gap:10px}
+.combo .list li[aria-selected="true"],.combo .list li:hover{background:var(--brand-soft)}
+.combo .list li small{color:var(--muted)}
+.combo .list .empty{color:var(--muted);cursor:default}
+
+/* ---------- Dashboard ---------- */
+.stats{display:flex;flex-wrap:wrap;gap:0;background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);margin-bottom:24px}
+.stat{padding:16px 22px;border-right:1px solid var(--line);flex:1;min-width:170px}
+.stat:last-child{border-right:0}
+.stat .n{font-size:28px;font-weight:700;font-variant-numeric:tabular-nums;line-height:1.1}
+.stat .l{color:var(--muted);font-size:13px}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:20px 22px;margin-bottom:24px}
+.panel h3{margin:0 0 4px;font-size:15px}
+.panel .sub{color:var(--muted);font-size:13px;margin:0 0 16px}
+.timeline{display:grid;grid-template-columns:repeat(12,minmax(54px,1fr));gap:8px;overflow-x:auto}
+.tl{display:flex;flex-direction:column;gap:6px;align-items:stretch;text-align:center;font-size:12px}
+.tl .col{height:110px;background:var(--surface-2);border-radius:8px;display:flex;flex-direction:column-reverse;overflow:hidden;border:1px solid var(--line)}
+.tl .col i{display:block}
+.tl .col .c{background:var(--clo)}.tl .col .a{background:var(--att)}
+.tl .lab{font-weight:600}
+.tl .val{color:var(--muted);font-variant-numeric:tabular-nums}
+.tl.now .lab{color:var(--brand)}
+.tl.now .col{border-color:var(--brand);border-width:2px}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+@media (max-width:1000px){.two{grid-template-columns:1fr}}
+table.list{width:100%;border-collapse:collapse}
+.list th{text-align:left;font-size:12px;color:var(--muted);font-weight:600;padding:8px 10px;border-bottom:1px solid var(--line)}
+.list td{padding:9px 10px;border-bottom:1px solid var(--line)}
+.list tr:last-child td{border-bottom:0}
+.pchips{display:flex;gap:4px;flex-wrap:wrap}
+.pchip{font-size:11px;font-weight:600;background:var(--clo-soft);color:var(--clo);padding:2px 7px;border-radius:5px}
+.empty-note{color:var(--muted);padding:18px 4px;text-align:center}
+
+/* ---------- Formateurs table ---------- */
+table.base{width:100%;border-collapse:collapse;background:var(--surface)}
+.basewrap{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);overflow:auto}
+.base th{position:sticky;top:0;background:var(--surface-2);text-align:left;font-size:12px;color:var(--muted);font-weight:600;padding:10px 12px;border-bottom:1px solid var(--line);z-index:1}
+.base td{padding:6px 12px;border-bottom:1px solid var(--line)}
+.base td.rem{padding:4px 6px}
+.src{font-size:11px;font-weight:600;padding:2px 8px;border-radius:99px;background:var(--brand-soft);color:var(--brand)}
+.src.local{background:var(--na-soft);color:var(--muted)}
+.switch{display:inline-flex;align-items:center;gap:8px;cursor:pointer;font-size:13px}
+.switch input{appearance:none;width:34px;height:20px;border-radius:99px;background:var(--line);position:relative;cursor:pointer;margin:0;transition:background .15s}
+.switch input::after{content:"";position:absolute;top:3px;left:3px;width:14px;height:14px;border-radius:50%;background:#fff;transition:left .15s}
+.switch input:checked{background:var(--brand)}
+.switch input:checked::after{left:17px}
+
+/* ---------- Welcome ---------- */
+.welcome{max-width:620px;margin:8vh auto;background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:36px}
+.welcome h2{font-size:22px;margin-bottom:8px}
+.welcome p{color:var(--muted)}
+.welcome .acts{display:flex;gap:10px;flex-wrap:wrap;margin-top:20px}
+.drop{margin-top:22px;border:2px dashed var(--line);border-radius:12px;padding:22px;text-align:center;color:var(--muted)}
+.drop.over{border-color:var(--brand);background:var(--brand-soft);color:var(--ink)}
+
+/* ---------- Dialog / toast / banner ---------- */
+dialog{border:0;border-radius:14px;padding:0;max-width:560px;width:calc(100% - 32px);background:var(--surface);color:var(--ink);box-shadow:0 24px 64px rgba(10,20,40,.3)}
+dialog::backdrop{background:rgba(12,22,36,.45)}
+.dlg{padding:24px}
+.dlg h3{margin:0 0 8px;font-size:17px}
+.dlg p{color:var(--muted);margin:0 0 14px}
+.dlg .acts{display:flex;justify-content:flex-end;gap:8px;margin-top:18px;flex-wrap:wrap}
+.dlg label{display:block;font-size:13px;font-weight:600;margin:12px 0 6px}
+.dlg input[type=text],.dlg input[type=url]{width:100%;padding:9px 12px;border:1px solid var(--line);border-radius:8px;background:var(--surface)}
+.dlg ol{padding-left:20px;color:var(--muted);margin:0 0 6px}
+.dlg ol li{margin-bottom:4px}
+.menu{position:absolute;right:24px;top:56px;background:var(--surface);color:var(--ink);border:1px solid var(--line);border-radius:12px;box-shadow:0 16px 40px rgba(10,20,40,.2);padding:6px;min-width:240px;z-index:40}
+.menu button{display:block;width:100%;text-align:left;border:0;background:none;padding:9px 12px;border-radius:8px;cursor:pointer}
+.menu button:hover{background:var(--surface-2)}
+.menu hr{border:0;border-top:1px solid var(--line);margin:6px 0}
+.banner{background:var(--att-soft);border:1px solid var(--att);border-radius:var(--radius);padding:12px 16px;margin-bottom:18px;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.banner p{margin:0;flex:1;min-width:220px}
+.toast{position:fixed;left:50%;bottom:calc(24px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--ink);color:var(--surface);padding:10px 18px;border-radius:10px;font-weight:500;z-index:60;box-shadow:0 10px 30px rgba(0,0,0,.25);max-width:calc(100% - 32px)}
+footer{text-align:center;color:var(--muted);font-size:12px;padding:12px 24px 20px}
+
+@media (max-width:700px){
+  .bar{padding:12px 14px 0}
+  nav{padding:10px 10px 0}
+  main{padding:14px}
+  .title h1{font-size:16px}
+  .filestate{max-width:100%}
+  .grid .name{min-width:170px}
+  .gridwrap{max-height:calc(100vh - 330px)}
+  .combo{min-width:0;width:100%}
+  .field{min-width:0;width:100%}
+  .legend .hint{display:none}
+}
+</style>
+</head>
+<body>
+<header>
+  <div class="bar">
+    <div class="title"><h1>Déclarations formateurs</h1><span class="year" id="yearLabel"></span></div>
+    <div class="file">
+      <div class="filestate" id="fileState" title=""><i class="dot" id="fileDot"></i><span id="fileText">Aucun fichier</span></div>
+      <button class="sync-pill" id="autoSyncStatus" data-state="idle" type="button" title="Actualiser maintenant les formateurs depuis UniPop" aria-live="polite"><i></i><span>Synchro automatique · en attente</span></button>
+      <button class="hbtn" id="btnOpen">Ouvrir…</button>
+      <button class="hbtn solid" id="btnSave">Enregistrer</button>
+      <button class="hbtn" id="btnMenu" aria-haspopup="true" aria-expanded="false" aria-label="Plus d'options">⋯</button>
+    </div>
+  </div>
+  <nav role="tablist" id="tabs">
+    <button role="tab" data-view="dash" aria-selected="true">Tableau de bord</button>
+    <button role="tab" data-view="mens" aria-selected="false">Mensuel<span class="count" id="cMens"></span></button>
+    <button role="tab" data-view="trim" aria-selected="false">Trimestriel<span class="count" id="cTrim"></span></button>
+    <button role="tab" data-view="form" aria-selected="false">Formateurs<span class="count" id="cForm"></span></button>
+  </nav>
+</header>
+
+<div class="menu" id="menu" hidden>
+  <button data-act="saveas">Enregistrer sous…</button>
+  <button data-act="sync">Actualiser les formateurs (trainings.json)</button>
+  <button data-act="excel">Exporter vers Excel</button>
+  <hr>
+  <button data-act="newyear">Préparer l'année suivante…</button>
+  <button data-act="new">Nouveau fichier vide…</button>
+  <hr>
+  <button data-act="theme">Basculer clair / sombre</button>
+</div>
+
+<main>
+  <div id="bannerSlot"></div>
+
+  <!-- Welcome -->
+  <section class="welcome" id="welcome" hidden>
+    <h2>Bienvenue</h2>
+    <p>Ouvrez votre fichier de déclarations (.json) pour reprendre le suivi. Vos données restent sur votre ordinateur : rien n'est envoyé sur Internet.</p>
+    <div class="acts">
+      <button class="btn primary" id="wOpen">Ouvrir un fichier</button>
+      <button class="btn" id="wNew">Commencer un nouveau fichier</button>
+    </div>
+    <div class="drop" id="drop">Ou glissez votre fichier de déclarations ici</div>
+  </section>
+
+  <!-- Dashboard -->
+  <section class="view" id="v-dash">
+    <div class="stats" id="stats"></div>
+    <div class="panel">
+      <h3>Avancement mensuel</h3>
+      <p class="sub">Formateurs du suivi mensuel dont la période est entièrement clôturée (vert) ou en cours (jaune).</p>
+      <div class="timeline" id="timeline"></div>
+    </div>
+    <div class="two">
+      <div class="panel"><h3>Clôturés mensuels</h3><p class="sub">Au moins un mois entièrement clôturé.</p><div id="closedM"></div></div>
+      <div class="panel"><h3>Clôturés trimestriels</h3><p class="sub">Au moins un trimestre entièrement clôturé.</p><div id="closedT"></div></div>
+    </div>
+  </section>
+
+  <!-- Mensuel -->
+  <section class="view" id="v-mens" hidden>
+    <div class="toolbar">
+      <div class="combo" id="combo">
+        <div class="field">
+          <svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M8 3v10M3 8h10" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+          <input id="addInput" type="text" placeholder="Ajouter un formateur au suivi mensuel…" autocomplete="off" role="combobox" aria-expanded="false" aria-controls="addList">
+        </div>
+        <ul class="list" id="addList" role="listbox" hidden></ul>
+      </div>
+      <div class="grow"></div>
+      <div class="field" style="min-width:220px"><svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><circle cx="7" cy="7" r="5" fill="none" stroke="currentColor" stroke-width="2"/><path d="M11 11l3 3" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg><input id="qMens" type="search" placeholder="Filtrer"></div>
+    </div>
+    <div class="legend" id="legendM"></div>
+    <div class="gridwrap" id="wrapM"><table class="grid" id="gridM"></table></div>
+  </section>
+
+  <!-- Trimestriel -->
+  <section class="view" id="v-trim" hidden>
+    <div class="toolbar">
+      <div class="field"><svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><circle cx="7" cy="7" r="5" fill="none" stroke="currentColor" stroke-width="2"/><path d="M11 11l3 3" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg><input id="qTrim" type="search" placeholder="Rechercher un formateur"></div>
+      <div class="chips" id="fTrim">
+        <button class="chip" data-f="all" aria-pressed="true">Tous</button>
+        <button class="chip" data-f="active" aria-pressed="false">Avec statut</button>
+        <button class="chip" data-f="done" aria-pressed="false">Clôturés</button>
+        <button class="chip" data-f="none" aria-pressed="false">Sans statut</button>
+      </div>
+    </div>
+    <div class="legend" id="legendT"></div>
+    <div class="gridwrap"><table class="grid" id="gridT"></table></div>
+  </section>
+
+  <!-- Formateurs -->
+  <section class="view" id="v-form" hidden>
+    <div class="toolbar">
+      <div class="field"><svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><circle cx="7" cy="7" r="5" fill="none" stroke="currentColor" stroke-width="2"/><path d="M11 11l3 3" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg><input id="qForm" type="search" placeholder="Rechercher"></div>
+      <div class="grow"></div>
+      <span id="syncInfo" style="color:var(--muted);font-size:13px"></span>
+      <button class="btn" id="btnAddForm">Ajouter un formateur</button>
+      <button class="btn primary" id="btnSync">Actualiser depuis trainings.json</button>
+    </div>
+    <div class="basewrap"><table class="base" id="tblForm"></table></div>
+  </section>
+</main>
+<footer>Les données sont enregistrées dans un fichier sur votre ordinateur et en copie dans ce navigateur.</footer>
+
+<!-- Dialogs -->
+<dialog id="dlgSync"><div class="dlg">
+  <h3>Actualiser les formateurs</h3>
+  <p>Les nouveaux formateurs UniPop trouvés dans trainings.json sont ajoutés à la base. Rien n'est supprimé, les remarques et statuts restent inchangés.</p>
+  <label for="syncUrl">Adresse du fichier</label>
+  <input type="url" id="syncUrl">
+  <div id="syncFallback" hidden>
+    <label>Le serveur refuse l'accès direct depuis cette page. Faites-le en deux gestes :</label>
+    <ol>
+      <li><a id="syncLink" target="_blank" rel="noopener">Ouvrez trainings.json</a> et enregistrez la page (Ctrl+S).</li>
+      <li>Importez le fichier enregistré ci-dessous.</li>
+    </ol>
+  </div>
+  <div class="acts">
+    <button class="btn" data-close>Annuler</button>
+    <button class="btn" id="syncFile">Importer un fichier…</button>
+    <button class="btn primary" id="syncGo">Actualiser</button>
+  </div>
+</div></dialog>
+
+<dialog id="dlgAdd"><div class="dlg">
+  <h3>Ajouter un formateur</h3>
+  <p>Pour une personne qui n'apparaît pas (encore) dans trainings.json.</p>
+  <label for="addNom">Nom</label><input type="text" id="addNom" autocomplete="off">
+  <label for="addPrenom">Prénom</label><input type="text" id="addPrenom" autocomplete="off">
+  <label for="addRem">Remarque permanente</label><input type="text" id="addRem" autocomplete="off">
+  <div class="acts"><button class="btn" data-close>Annuler</button><button class="btn primary" id="addGo">Ajouter</button></div>
+</div></dialog>
+
+<dialog id="dlgConfirm"><div class="dlg">
+  <h3 id="cfTitle"></h3><p id="cfText"></p>
+  <div class="acts"><button class="btn" data-close>Annuler</button><button class="btn primary" id="cfGo">Confirmer</button></div>
+</div></dialog>
+
+<input type="file" id="fileInput" accept=".json,application/json" hidden>
+<input type="file" id="syncInput" accept=".json,application/json,text/plain" hidden>
+
+<script>
+(() => {
+"use strict";
+
+/* ================= Constants ================= */
+const ST = ["", "En attente", "Clôturé", "N/A"];
+const STEPS = ["Déclaration", "Signé délégué", "Compta"];
+const STEP_LETTERS = ["D", "S", "C"];
+const MONTHS = ["Sept","Oct","Nov","Déc","Jan","Fév","Mar","Avr","Mai","Juin","Juil","Août"];
+const QUARTERS = ["1er trimestre","2e trimestre","3e trimestre","4e trimestre"];
+const DEFAULT_URL = "https://www.unipop.lu/private/trainings.json";
+const LS_KEY = "unipop-declarations:data";
+const LS_THEME = "unipop-declarations:theme";
+const AUTO_SYNC_INTERVAL_MS = 60 * 60 * 1000;
+const AUTO_SYNC_TIMEOUT_MS = 12000;
+const fsSupported = "showOpenFilePicker" in window;
+
+/* ================= State ================= */
+let S = null;               // data
+let handle = null;          // FileSystemFileHandle
+let fileName = "";
+let dirty = false;
+let lastSaved = null;
+let saveTimer = null;
+let needsReconnect = null;  // stored handle awaiting permission
+let view = "dash";
+let trimFilter = "all";
+let autoSyncRunning = false;
+let lastAutoAttempt = 0;
+let syncFailure = "";
+
+const $ = s => document.querySelector(s);
+const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const collator = new Intl.Collator("fr", {sensitivity:"base"});
+
+/* ================= Data helpers ================= */
+const keyOf = (nom, prenom) => nom.trim().toUpperCase() + "|" + prenom.trim().toUpperCase();
+const fullName = f => (f.nom + " " + f.prenom).trim();
+const byId = id => S.formateurs.find(f => f.id === id);
+const sortForm = () => S.formateurs.sort((a,b) => collator.compare(a.nom,b.nom) || collator.compare(a.prenom,b.prenom));
+const empty = n => Array(n).fill("");
+
+function newData(anneeDebut){
+  return {app:"unipop-declarations", version:1, anneeDebut, derniereSynchro:null, modifie:new Date().toISOString(),
+    sourceUrl:DEFAULT_URL, formateurs:[], mensuel:{}, mensuelArchive:{}, trimestriel:{}};
+}
+function normalize(d){
+  if(!d || d.app !== "unipop-declarations" || !Array.isArray(d.formateurs)) throw new Error("Ce fichier n'est pas un fichier de déclarations UniPop.");
+  d.mensuel ||= {}; d.mensuelArchive ||= {}; d.trimestriel ||= {}; d.sourceUrl ||= DEFAULT_URL;
+  d.anneeDebut = +d.anneeDebut || defaultYear();
+  for(const m of Object.values(d.mensuel)){ m.statuts = fit(m.statuts, 36); if(m.remarque === undefined) m.remarque = null; }
+  for(const k in d.trimestriel) d.trimestriel[k] = fit(d.trimestriel[k], 12);
+  return d;
+}
+const fit = (a, n) => { a = Array.isArray(a) ? a.slice(0,n) : []; while(a.length<n) a.push(""); return a.map(x => ST.includes(x) ? x : ""); };
+function defaultYear(){ const d = new Date(); return d.getMonth() >= 8 ? d.getFullYear() : d.getFullYear()-1; }
+const yearLabel = () => `${S.anneeDebut}/${S.anneeDebut+1}`;
+const monthLabel = i => `${MONTHS[i]} ${i < 4 ? S.anneeDebut : S.anneeDebut+1}`;
+function currentMonthIndex(){
+  const d = new Date(); const idx = (d.getMonth() - 8 + 12) % 12;
+  const y = idx < 4 ? S.anneeDebut : S.anneeDebut + 1;
+  return d.getFullYear() === y ? idx : -1;
+}
+/* A period counts as closed when its three steps are "Clôturé" (same rule as the Excel). */
+function closedPeriods(st, n){ const out=[]; for(let p=0;p<n;p++) if(st[p*3]==="Clôturé"&&st[p*3+1]==="Clôturé"&&st[p*3+2]==="Clôturé") out.push(p); return out; }
+const mensRemark = id => { const m = S.mensuel[id]; const f = byId(id); return (m && m.remarque !== null) ? m.remarque : (f ? f.remarque : ""); };
+const mensIds = () => Object.keys(S.mensuel).filter(byId).sort((a,b) => collator.compare(fullName(byId(a)), fullName(byId(b))));
+const trimIds = () => S.formateurs.filter(f => !S.mensuel[f.id]).map(f => f.id);
+
+/* ================= Persistence ================= */
+function touch(){
+  S.modifie = new Date().toISOString();
+  dirty = true;
+  try{ localStorage.setItem(LS_KEY, JSON.stringify(S)); }catch(e){}
+  updateFileState();
+  if(handle){ clearTimeout(saveTimer); saveTimer = setTimeout(() => saveToHandle(true), 700); }
+}
+const serialize = () => JSON.stringify(S, null, 1);
+const suggestedName = () => `declarations-unipop-${S.anneeDebut}-${S.anneeDebut+1}.json`;
+
+async function saveToHandle(silent){
+  if(!handle) return false;
+  try{
+    if((await handle.queryPermission({mode:"readwrite"})) !== "granted"){
+      if(silent) return false;
+      if((await handle.requestPermission({mode:"readwrite"})) !== "granted") return false;
+    }
+    const w = await handle.createWritable(); await w.write(serialize()); await w.close();
+    dirty = false; lastSaved = new Date(); updateFileState();
+    if(!silent) toast("Enregistré dans " + fileName);
+    return true;
+  }catch(e){ console.error(e); toast("Impossible d'enregistrer : " + e.message); updateFileState(true); return false; }
+}
+async function save(){
+  if(!S) return;
+  if(handle) return saveToHandle(false);
+  return saveAs();
+}
+async function saveAs(){
+  if(!S) return;
+  if(fsSupported){
+    try{
+      const h = await window.showSaveFilePicker({suggestedName: fileName || suggestedName(), types:[{description:"Déclarations UniPop", accept:{"application/json":[".json"]}}]});
+      await setHandle(h); await saveToHandle(false);
+    }catch(e){ if(e.name !== "AbortError") toast(e.message); }
+  } else {
+    const blob = new Blob([serialize()], {type:"application/json"});
+    const a = Object.assign(document.createElement("a"), {href:URL.createObjectURL(blob), download:fileName || suggestedName()});
+    document.body.appendChild(a); a.click(); a.remove(); setTimeout(() => URL.revokeObjectURL(a.href), 2000);
+    dirty = false; lastSaved = new Date(); updateFileState();
+    toast("Fichier téléchargé : " + a.download);
+  }
+}
+async function openFile(){
+  if(fsSupported){
+    try{
+      const [h] = await window.showOpenFilePicker({types:[{description:"Déclarations UniPop", accept:{"application/json":[".json"]}}]});
+      const text = await (await h.getFile()).text();
+      loadData(JSON.parse(text), h.name); await setHandle(h);
+      dirty = false; lastSaved = new Date(); updateFileState();
+      toast("Fichier ouvert : " + h.name);
+    }catch(e){ if(e.name !== "AbortError") toast(e instanceof SyntaxError ? "Ce fichier n'est pas un JSON valide." : e.message); }
+  } else $("#fileInput").click();
+}
+async function readFileObject(file){
+  try{
+    loadData(JSON.parse(await file.text()), file.name);
+    handle = null; dirty = false; lastSaved = new Date(); updateFileState();
+    toast("Fichier ouvert : " + file.name);
+  }catch(e){ toast(e instanceof SyntaxError ? "Ce fichier n'est pas un JSON valide." : e.message); }
+}
+function loadData(d, name){
+  S = normalize(d); fileName = name || ""; needsReconnect = null;
+  try{ localStorage.setItem(LS_KEY, JSON.stringify(S)); }catch(e){}
+  renderAll();
+  setTimeout(() => autoSyncTeachers({force:true}), 0);
+}
+
+/* Remember the file handle between visits (Chrome / Edge) */
+function idb(){ return new Promise((res,rej) => { const r = indexedDB.open("unipop-declarations",1); r.onupgradeneeded = () => r.result.createObjectStore("kv"); r.onsuccess = () => res(r.result); r.onerror = () => rej(r.error); }); }
+async function idbSet(k,v){ try{ const db = await idb(); db.transaction("kv","readwrite").objectStore("kv").put(v,k); }catch(e){} }
+async function idbGet(k){ try{ const db = await idb(); return await new Promise(res => { const r = db.transaction("kv").objectStore("kv").get(k); r.onsuccess = () => res(r.result); r.onerror = () => res(null); }); }catch(e){ return null; } }
+async function setHandle(h){ handle = h; fileName = h.name; needsReconnect = null; await idbSet("handle", h); renderBanner(); }
+
+async function reconnect(){
+  const h = needsReconnect; if(!h) return;
+  try{
+    if((await h.requestPermission({mode:"readwrite"})) !== "granted") return;
+    const fileData = normalize(JSON.parse(await (await h.getFile()).text()));
+    const local = S;
+    // Keep whichever copy is newer: file on disk or browser copy.
+    if(local && local.modifie && fileData.modifie && new Date(local.modifie) > new Date(fileData.modifie)){
+      S = local; handle = h; fileName = h.name; needsReconnect = null;
+      await saveToHandle(false);
+    } else {
+      loadData(fileData, h.name); handle = h; dirty = false; lastSaved = new Date();
+      toast("Fichier reconnecté : " + h.name);
+    }
+    renderBanner(); updateFileState(); renderAll();
+  }catch(e){ toast("Le fichier n'est plus accessible. Ouvrez-le à nouveau."); needsReconnect = null; renderBanner(); }
+}
+
+function updateFileState(error){
+  const dot = $("#fileDot"), txt = $("#fileText"), box = $("#fileState");
+  dot.className = "dot";
+  if(!S){ txt.textContent = "Aucun fichier"; return; }
+  if(error){ dot.classList.add("warn"); txt.textContent = "Erreur d'enregistrement"; return; }
+  if(handle){
+    if(dirty){ dot.classList.add("dirty"); txt.textContent = fileName + " · enregistrement…"; }
+    else { dot.classList.add("ok"); txt.textContent = fileName + (lastSaved ? " · enregistré " + lastSaved.toLocaleTimeString("fr-LU",{hour:"2-digit",minute:"2-digit"}) : ""); }
+    box.title = "Enregistrement automatique dans " + fileName;
+  } else {
+    if(dirty){ dot.classList.add("dirty"); txt.textContent = (fileName || "Copie du navigateur") + " · pas encore enregistré sur le disque"; }
+    else { dot.classList.add("ok"); txt.textContent = (fileName || "Copie du navigateur") + (lastSaved ? " · enregistré" : ""); }
+    box.title = fsSupported ? "Cliquez sur Enregistrer pour choisir un fichier sur le disque" : "Ce navigateur télécharge une copie à chaque enregistrement. Chrome ou Edge enregistrent directement dans le fichier.";
+  }
+}
+window.addEventListener("beforeunload", e => { if(dirty && !handle){ e.preventDefault(); e.returnValue = ""; } });
+
+/* ================= Rendering ================= */
+function renderAll(){
+  const has = !!S;
+  $("#welcome").hidden = has;
+  document.querySelectorAll(".view").forEach(v => v.hidden = !has || v.id !== "v-" + view);
+  $("#tabs").style.visibility = has ? "visible" : "hidden";
+  $("#btnSave").disabled = !has;
+  if(!has){ $("#yearLabel").textContent = ""; updateFileState(); renderBanner(); return; }
+  $("#yearLabel").textContent = yearLabel();
+  $("#cMens").textContent = mensIds().length;
+  $("#cTrim").textContent = trimIds().length;
+  $("#cForm").textContent = S.formateurs.length;
+  renderBanner();
+  if(view === "dash") renderDash();
+  if(view === "mens") renderMens();
+  if(view === "trim") renderTrim();
+  if(view === "form") renderForm();
+  updateFileState();
+}
+
+function renderBanner(){
+  const slot = $("#bannerSlot");
+  if(needsReconnect){
+    slot.innerHTML = `<div class="banner"><p>Votre fichier <b>${esc(needsReconnect.name)}</b> est prêt à être rouvert. Autorisez l'accès pour reprendre l'enregistrement automatique.</p><button class="btn primary" id="bReconnect">Rouvrir ${esc(needsReconnect.name)}</button></div>`;
+    $("#bReconnect").onclick = reconnect;
+  } else if(S && !handle && !fsSupported && dirty){
+    slot.innerHTML = `<div class="banner"><p>Ce navigateur ne peut pas écrire directement dans un fichier. Cliquez sur <b>Enregistrer</b> pour télécharger une copie à jour, ou utilisez Chrome / Edge pour l'enregistrement automatique.</p></div>`;
+  } else slot.innerHTML = "";
+}
+
+function legendHTML(extra){
+  return `<span class="item"><i class="sw" style="background:var(--surface)"></i>Vide</span>
+    <span class="item"><i class="sw" style="background:var(--att);border-color:var(--att)"></i>En attente</span>
+    <span class="item"><i class="sw" style="background:var(--clo);border-color:var(--clo)"></i>Clôturé</span>
+    <span class="item"><i class="sw" style="background:var(--na-soft)"></i>N/A</span>
+    <span class="item"><b>D</b>&nbsp;Déclaration · <b>S</b>&nbsp;Signé délégué · <b>C</b>&nbsp;Compta</span>
+    <span class="hint">${extra}</span>`;
+}
+
+function capHTML(kind, id, p, st, label){
+  const done = st[p*3]==="Clôturé" && st[p*3+1]==="Clôturé" && st[p*3+2]==="Clôturé";
+  let h = `<div class="cap${done?" done":""}" data-cap="${kind}|${esc(id)}|${p}">`;
+  for(let k=0;k<3;k++){
+    const s = st[p*3+k];
+    h += `<button class="seg" data-kind="${kind}" data-id="${esc(id)}" data-i="${p*3+k}" data-s="${esc(s)}" title="${esc(label)} · ${STEPS[k]} : ${s || "vide"}" aria-label="${esc(label)}, ${STEPS[k]} : ${s || "vide"}">${STEP_LETTERS[k]}</button>`;
+  }
+  return h + "</div>";
+}
+
+function nameCell(f, removable){
+  return `<th class="name" scope="row"><div class="nm"><span><b>${esc(f.nom)}</b> <span class="first">${esc(f.prenom)}</span></span>${removable ? `<button class="x" data-remove="${esc(f.id)}" title="Retirer du suivi mensuel" aria-label="Retirer ${esc(fullName(f))} du suivi mensuel">×</button>` : ""}</div></th>`;
+}
+
+/* ---- Mensuel ---- */
+function renderMens(){
+  $("#legendM").innerHTML = legendHTML("Cliquez pour changer le statut · Maj + clic pour revenir en arrière");
+  const q = $("#qMens").value.trim();
+  const ids = mensIds().filter(id => !q || fullName(byId(id)).toLowerCase().includes(q.toLowerCase()));
+  const now = currentMonthIndex();
+  let h = `<thead><tr><th class="name">Formateur</th><th>Remarque</th>`;
+  for(let m=0;m<12;m++) h += `<th class="${m===now?"now":""}"><button class="mhead" data-fill="${m}" title="Mettre les cases vides de ${monthLabel(m)} sur « En attente »">${monthLabel(m)}<small>D · S · C</small></button></th>`;
+  h += `</tr></thead><tbody>`;
+  if(!ids.length) h += `<tr><td colspan="14"><div class="empty-note">${mensIds().length ? "Aucun résultat pour ce filtre." : "Aucun formateur en suivi mensuel. Ajoutez-en un avec le champ ci-dessus."}</div></td></tr>`;
+  for(const id of ids){
+    const f = byId(id), m = S.mensuel[id];
+    const inh = m.remarque === null;
+    h += `<tr>${nameCell(f,true)}<td class="rem"><input class="${inh?"inherited":""}" data-mrem="${esc(id)}" value="${esc(mensRemark(id))}" placeholder="—" title="${inh ? "Remarque permanente (Formateurs). Modifiez pour la remplacer ici." : "Remarque propre au suivi mensuel"}"></td>`;
+    for(let p=0;p<12;p++) h += `<td class="per${p===now?" now":""}">${capHTML("m", id, p, m.statuts, monthLabel(p))}</td>`;
+    h += `</tr>`;
+  }
+  $("#gridM").innerHTML = h + `</tbody>`;
+}
+
+/* ---- Trimestriel ---- */
+function renderTrim(){
+  $("#legendT").innerHTML = legendHTML("Les formateurs en suivi mensuel n'apparaissent pas ici");
+  const q = $("#qTrim").value.trim().toLowerCase();
+  let ids = trimIds();
+  if(q) ids = ids.filter(id => fullName(byId(id)).toLowerCase().includes(q) || (byId(id).remarque||"").toLowerCase().includes(q));
+  const st = id => S.trimestriel[id] || empty(12);
+  if(trimFilter === "active") ids = ids.filter(id => st(id).some(Boolean));
+  if(trimFilter === "done") ids = ids.filter(id => closedPeriods(st(id),4).length);
+  if(trimFilter === "none") ids = ids.filter(id => !st(id).some(Boolean));
+  let h = `<thead><tr><th class="name">Formateur</th><th>Remarque permanente</th>`;
+  for(let p=0;p<4;p++) h += `<th>${QUARTERS[p]}<br><small style="font-weight:500;opacity:.7">D · S · C</small></th>`;
+  h += `</tr></thead><tbody>`;
+  if(!ids.length) h += `<tr><td colspan="6"><div class="empty-note">Aucun formateur ne correspond.</div></td></tr>`;
+  for(const id of ids){
+    const f = byId(id), s = st(id);
+    h += `<tr>${nameCell(f,false)}<td class="rem"><input data-frem="${esc(id)}" value="${esc(f.remarque)}" placeholder="—"></td>`;
+    for(let p=0;p<4;p++) h += `<td class="per">${capHTML("t", id, p, s, QUARTERS[p])}</td>`;
+    h += `</tr>`;
+  }
+  $("#gridT").innerHTML = h + `</tbody>`;
+}
+
+/* ---- Formateurs ---- */
+function renderForm(){
+  const q = $("#qForm").value.trim().toLowerCase();
+  const list = S.formateurs.filter(f => !q || fullName(f).toLowerCase().includes(q) || (f.remarque||"").toLowerCase().includes(q));
+  $("#syncInfo").textContent = S.derniereSynchro ? "Dernière actualisation : " + new Date(S.derniereSynchro).toLocaleDateString("fr-LU") : "Jamais actualisé";
+  let h = `<thead><tr><th>Nom</th><th>Prénom</th><th style="width:34%">Remarque permanente</th><th>Suivi mensuel</th><th>Origine</th><th></th></tr></thead><tbody>`;
+  if(!list.length) h += `<tr><td colspan="6"><div class="empty-note">${S.formateurs.length ? "Aucun résultat." : "La base est vide. Actualisez depuis trainings.json ou ajoutez un formateur."}</div></td></tr>`;
+  for(const f of list){
+    h += `<tr><td><b>${esc(f.nom)}</b></td><td>${esc(f.prenom)}</td>
+      <td class="rem"><input data-frem="${esc(f.id)}" value="${esc(f.remarque)}" placeholder="—"></td>
+      <td><label class="switch"><input type="checkbox" data-track="${esc(f.id)}" ${S.mensuel[f.id]?"checked":""}><span>${S.mensuel[f.id]?"Mensuel":"Trimestriel"}</span></label></td>
+      <td><span class="src ${f.source==="json"?"":"local"}">${f.source==="json"?"trainings.json":"Ajouté à la main"}</span></td>
+      <td style="text-align:right"><button class="btn danger" data-del="${esc(f.id)}" style="padding:4px 10px">Supprimer</button></td></tr>`;
+  }
+  $("#tblForm").innerHTML = h + `</tbody>`;
+}
+
+/* ---- Dashboard ---- */
+function renderDash(){
+  const mids = mensIds(), tids = trimIds();
+  const cm = mids.filter(id => closedPeriods(S.mensuel[id].statuts,12).length);
+  const ct = tids.filter(id => S.trimestriel[id] && closedPeriods(S.trimestriel[id],4).length);
+  const now = currentMonthIndex();
+  const pend = now >= 0 ? mids.filter(id => { const s = S.mensuel[id].statuts.slice(now*3, now*3+3); return !(s.every(x => x==="Clôturé")) && !s.every(x => x==="N/A"); }).length : null;
+  $("#stats").innerHTML = `
+    <div class="stat"><div class="n">${S.formateurs.length}</div><div class="l">formateurs dans la base</div></div>
+    <div class="stat"><div class="n">${mids.length}</div><div class="l">en suivi mensuel</div></div>
+    ${pend !== null ? `<div class="stat"><div class="n">${pend}</div><div class="l">à traiter pour ${monthLabel(now)}</div></div>` : ""}
+    <div class="stat"><div class="n">${cm.length}</div><div class="l">clôturés mensuels</div></div>
+    <div class="stat"><div class="n">${ct.length}</div><div class="l">clôturés trimestriels</div></div>`;
+
+  let t = "";
+  const total = Math.max(mids.length, 1);
+  for(let p=0;p<12;p++){
+    let c=0, a=0;
+    for(const id of mids){ const s = S.mensuel[id].statuts.slice(p*3,p*3+3); if(s.every(x=>x==="Clôturé")) c++; else if(s.some(x=>x==="Clôturé"||x==="En attente")) a++; }
+    t += `<div class="tl${p===now?" now":""}" title="${monthLabel(p)} : ${c} clôturés, ${a} en cours sur ${mids.length}">
+      <div class="col"><i class="c" style="height:${c/total*100}%"></i><i class="a" style="height:${a/total*100}%"></i></div>
+      <span class="lab">${MONTHS[p]}</span><span class="val">${c}/${mids.length}</span></div>`;
+  }
+  $("#timeline").innerHTML = t;
+
+  const tbl = (ids, getSt, n, labelFn, remFn) => ids.length ? `<table class="list"><thead><tr><th>Nom</th><th>Prénom</th><th>Remarque</th><th>Clôturé</th></tr></thead><tbody>` +
+    ids.map(id => { const f = byId(id); return `<tr><td><b>${esc(f.nom)}</b></td><td>${esc(f.prenom)}</td><td>${esc(remFn(id))}</td><td><div class="pchips">${closedPeriods(getSt(id),n).map(p => `<span class="pchip">${labelFn(p)}</span>`).join("")}</div></td></tr>`; }).join("") + `</tbody></table>`
+    : `<div class="empty-note">Aucune période entièrement clôturée pour l'instant.</div>`;
+  $("#closedM").innerHTML = tbl(cm, id => S.mensuel[id].statuts, 12, p => MONTHS[p], mensRemark);
+  $("#closedT").innerHTML = tbl(ct, id => S.trimestriel[id], 4, p => "T" + (p+1), id => byId(id).remarque);
+}
+
+/* ================= Actions ================= */
+function cycle(btn, back){
+  const kind = btn.dataset.kind, id = btn.dataset.id, i = +btn.dataset.i;
+  let arr;
+  if(kind === "m") arr = S.mensuel[id].statuts;
+  else { S.trimestriel[id] ||= empty(12); arr = S.trimestriel[id]; }
+  const cur = ST.indexOf(arr[i]);
+  const next = ST[(cur + (back ? ST.length-1 : 1)) % ST.length];
+  arr[i] = next;
+  btn.dataset.s = next;
+  const p = Math.floor(i/3), k = i%3;
+  const label = kind === "m" ? monthLabel(p) : QUARTERS[p];
+  btn.title = `${label} · ${STEPS[k]} : ${next || "vide"}`;
+  btn.setAttribute("aria-label", `${label}, ${STEPS[k]} : ${next || "vide"}`);
+  const cap = btn.parentElement;
+  cap.classList.toggle("done", arr[p*3]==="Clôturé" && arr[p*3+1]==="Clôturé" && arr[p*3+2]==="Clôturé");
+  touch();
+}
+
+function addMensuel(id){
+  if(!byId(id) || S.mensuel[id]) return;
+  S.mensuel[id] = S.mensuelArchive[id] || {remarque:null, statuts:empty(36)};
+  delete S.mensuelArchive[id];
+  touch(); renderAll();
+  toast(fullName(byId(id)) + " ajouté au suivi mensuel");
+}
+function removeMensuel(id){
+  const f = byId(id);
+  confirmDlg("Retirer du suivi mensuel ?", `${fullName(f)} repasse dans le suivi trimestriel. Ses statuts mensuels sont gardés et reviennent si vous l'ajoutez à nouveau.`, () => {
+    S.mensuelArchive[id] = S.mensuel[id]; delete S.mensuel[id]; touch(); renderAll();
+  });
+}
+function fillMonth(m){
+  const ids = mensIds();
+  confirmDlg(`Préparer ${monthLabel(m)} ?`, `Les cases vides de ${monthLabel(m)} passent sur « En attente » pour les ${ids.length} formateurs du suivi mensuel. Les statuts déjà saisis ne changent pas.`, () => {
+    for(const id of ids){ const s = S.mensuel[id].statuts; for(let k=0;k<3;k++) if(!s[m*3+k]) s[m*3+k] = "En attente"; }
+    touch(); renderAll();
+  });
+}
+
+/* ---- trainings.json import (same rules as the PowerShell script) ---- */
+function extractTeachers(json){
+  const pick = (o, names) => { if(o && typeof o === "object") for(const n of names) if(n in o) return o[n]; return undefined; };
+  let trainings = Array.isArray(json) ? json : (pick(json,["trainings","formations","data","items"]) ?? [json]);
+  if(!Array.isArray(trainings)) trainings = [trainings];
+  const out = new Map();
+  for(const t of trainings){
+    if(!t) continue;
+    const org = pick(t,["organisateur","organiser"]);
+    const code = String(pick(org,["code","Code"]) ?? "").trim();
+    if(code.toUpperCase() !== "UNIPOP") continue;
+    let ens = pick(t,["enseignants","teachers","formateurs"]);
+    if(!ens) continue;
+    if(!Array.isArray(ens)) ens = [ens];
+    for(const e of ens){
+      if(!e) continue;
+      const nom = String(pick(e,["nom","lastName","lastname"]) ?? "").trim().toUpperCase();
+      const prenom = String(pick(e,["prenom","prénom","firstName","firstname"]) ?? "").trim();
+      if(!nom) continue;
+      const k = keyOf(nom, prenom);
+      if(!out.has(k)) out.set(k, {nom, prenom});
+    }
+  }
+  return out;
+}
+function updateSyncStatus(state, detail=""){
+  const el = $("#autoSyncStatus");
+  if(!el) return;
+  el.dataset.state = state;
+  const text = el.querySelector("span");
+  const date = S?.derniereSynchro ? new Date(S.derniereSynchro).toLocaleString("fr-LU",{day:"2-digit",month:"2-digit",hour:"2-digit",minute:"2-digit"}) : "";
+  text.textContent = state === "busy" ? "Chargement des formateurs…" :
+    state === "ok" ? `UniPop · synchronisé ${date}` :
+    state === "error" ? "Synchro indisponible · importer JSON" :
+    date ? `Dernière synchro · ${date}` : "Synchro automatique · en attente";
+  el.title = detail || (state === "error" ? "Accès direct bloqué par le serveur ou la connexion. Cliquez pour importer trainings.json manuellement." : "Cliquez pour actualiser les formateurs");
+}
+
+function mergeTeachers(json, {silent=false}={}){
+  const t = extractTeachers(json);
+  if(!t.size) throw new Error("Aucun formateur trouvé dans ce fichier. Rien n'a été modifié.");
+  let added = 0;
+  const known = new Set(S.formateurs.map(f => f.id));
+  for(const [k, p] of t) if(!known.has(k)){ S.formateurs.push({id:k, nom:p.nom, prenom:p.prenom, remarque:"", source:"json"}); added++; }
+  sortForm();
+  S.derniereSynchro = new Date().toISOString();
+  touch(); renderAll();
+  updateSyncStatus("ok");
+  if(!silent) toast(added ? `${added} nouveau${added>1?"x":""} formateur${added>1?"s":""} ajouté${added>1?"s":""}` : `Base à jour · ${t.size} formateurs UniPop trouvés`);
+  return {added, total:t.size};
+}
+
+async function fetchTrainings(url){
+  const ctrl = new AbortController();
+  const timer = setTimeout(() => ctrl.abort(), AUTO_SYNC_TIMEOUT_MS);
+  try{
+    const response = await fetch(url,{cache:"no-store",mode:"cors",signal:ctrl.signal,credentials:"omit"});
+    if(!response.ok) throw new Error(`HTTP ${response.status}`);
+    return await response.json();
+  } finally { clearTimeout(timer); }
+}
+
+async function autoSyncTeachers({force=false,notify=false}={}){
+  if(!S || autoSyncRunning || (!force && Date.now()-lastAutoAttempt < AUTO_SYNC_INTERVAL_MS)) return;
+  if(!navigator.onLine){ updateSyncStatus("error","Hors ligne. Les données locales sont conservées."); return; }
+  autoSyncRunning = true;
+  lastAutoAttempt = Date.now();
+  updateSyncStatus("busy");
+  try{
+    const json = await fetchTrainings(S.sourceUrl || DEFAULT_URL);
+    const result = mergeTeachers(json,{silent:!notify});
+    syncFailure = "";
+    updateSyncStatus("ok",`${result.total} formateurs UniPop trouvés, ${result.added} nouveaux. Aucun statut supprimé.`);
+  }catch(err){
+    syncFailure = err?.message || "Accès indisponible";
+    console.warn("Synchro automatique UniPop :",err);
+    updateSyncStatus("error",`Connexion/CORS : ${syncFailure}. Les données existantes restent intactes. Cliquez pour importer un fichier.`);
+    if(notify) toast("Impossible de charger trainings.json automatiquement. Import manuel disponible.");
+  }finally{ autoSyncRunning = false; }
+}
+
+async function syncFromUrl(){
+  const url = $("#syncUrl").value.trim() || DEFAULT_URL;
+  S.sourceUrl = url;
+  $("#syncGo").disabled = true; $("#syncGo").textContent = "Chargement…";
+  try{
+    const json = await fetchTrainings(url);
+    $("#dlgSync").close();
+    mergeTeachers(json);
+    lastAutoAttempt = Date.now();
+  }catch(e){
+    console.warn(e);
+    $("#syncFallback").hidden = false;
+    $("#syncLink").href = url;
+    updateSyncStatus("error",`Accès automatique impossible : ${e.message}. Utilisez « Importer un fichier… ».`);
+  }finally{ $("#syncGo").disabled = false; $("#syncGo").textContent = "Actualiser"; }
+}
+
+/* ---- Excel export ---- */
+function loadXLSX(){
+  return new Promise((res, rej) => {
+    if(window.XLSX) return res(window.XLSX);
+    const s = document.createElement("script");
+    s.src = "https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js";
+    s.onload = () => res(window.XLSX); s.onerror = () => rej(new Error("Connexion nécessaire pour l'export Excel."));
+    document.head.appendChild(s);
+  });
+}
+async function exportExcel(){
+  try{
+    const X = await loadXLSX();
+    const wb = X.utils.book_new();
+    const h1 = ["Formateur","Remarque"], h2 = ["",""];
+    for(let m=0;m<12;m++){ h1.push(monthLabel(m),"",""); h2.push(...STEPS); }
+    const rowsM = mensIds().map(id => [fullName(byId(id)), mensRemark(id), ...S.mensuel[id].statuts]);
+    const wsM = X.utils.aoa_to_sheet([h1,h2,...rowsM]);
+    wsM["!merges"] = Array.from({length:12}, (_,m) => ({s:{r:0,c:2+m*3}, e:{r:0,c:4+m*3}}));
+    wsM["!cols"] = [{wch:30},{wch:26},...Array(36).fill({wch:12})];
+    X.utils.book_append_sheet(wb, wsM, "Mensuel");
+    const t1 = ["Formateur","Remarque"], t2 = ["",""];
+    for(let p=0;p<4;p++){ t1.push(QUARTERS[p],"",""); t2.push(...STEPS); }
+    const rowsT = trimIds().map(id => [fullName(byId(id)), byId(id).remarque, ...(S.trimestriel[id] || empty(12))]);
+    const wsT = X.utils.aoa_to_sheet([t1,t2,...rowsT]);
+    wsT["!merges"] = Array.from({length:4}, (_,p) => ({s:{r:0,c:2+p*3}, e:{r:0,c:4+p*3}}));
+    wsT["!cols"] = [{wch:30},{wch:26},...Array(12).fill({wch:12})];
+    X.utils.book_append_sheet(wb, wsT, "Trimestriel");
+    const wsF = X.utils.aoa_to_sheet([["Nom","Prénom","Remarque permanente","Suivi","Origine"], ...S.formateurs.map(f => [f.nom, f.prenom, f.remarque, S.mensuel[f.id]?"Mensuel":"Trimestriel", f.source==="json"?"trainings.json":"Local"])]);
+    wsF["!cols"] = [{wch:24},{wch:24},{wch:34},{wch:12},{wch:14}];
+    X.utils.book_append_sheet(wb, wsF, "Formateurs");
+    X.writeFile(wb, `Declarations_UniPop_${S.anneeDebut}_${S.anneeDebut+1}.xlsx`);
+  }catch(e){ toast(e.message); }
+}
+
+/* ---- New year / new file ---- */
+function newYear(){
+  const y = S.anneeDebut + 1;
+  confirmDlg(`Préparer ${y}/${y+1} ?`, `Un nouveau fichier est créé avec la même base de formateurs et la même liste de suivi mensuel, sans statuts. Enregistrez d'abord le fichier actuel : il reste intact.`, async () => {
+    const d = newData(y);
+    d.formateurs = S.formateurs.map(f => ({...f}));
+    for(const id of Object.keys(S.mensuel)) d.mensuel[id] = {remarque:S.mensuel[id].remarque, statuts:empty(36)};
+    d.derniereSynchro = S.derniereSynchro; d.sourceUrl = S.sourceUrl;
+    S = d; handle = null; fileName = ""; touch(); renderAll();
+    toast(`Année ${y}/${y+1} prête. Enregistrez-la sous un nouveau nom.`);
+    if(fsSupported) saveAs();
+  });
+}
+function newFile(){
+  const go = () => { S = newData(defaultYear()); handle = null; fileName = ""; view = "form"; selectTab("form"); touch(); renderAll(); autoSyncTeachers({force:true,notify:true}); };
+  if(S) confirmDlg("Nouveau fichier vide ?", "Le fichier actuel n'est pas modifié. Pensez à l'avoir enregistré.", go); else go();
+}
+
+/* ================= UI plumbing ================= */
+function toast(msg){
+  document.querySelectorAll(".toast").forEach(t => t.remove());
+  const t = Object.assign(document.createElement("div"), {className:"toast", textContent:msg, role:"status"});
+  document.body.appendChild(t); setTimeout(() => t.remove(), 3200);
+}
+function confirmDlg(title, text, onOk){
+  $("#cfTitle").textContent = title; $("#cfText").textContent = text;
+  const d = $("#dlgConfirm");
+  $("#cfGo").onclick = () => { d.close(); onOk(); };
+  d.showModal();
+}
+document.querySelectorAll("dialog").forEach(d => d.addEventListener("click", e => { if(e.target.matches("[data-close]") || e.target === d) d.close(); }));
+
+function selectTab(v){
+  view = v;
+  document.querySelectorAll("#tabs button").forEach(b => b.setAttribute("aria-selected", b.dataset.view === v));
+  renderAll();
+  if(v === "mens"){ const now = currentMonthIndex(); const th = document.querySelectorAll("#gridM thead th")[now + 2]; if(now > 2 && th) $("#wrapM").scrollLeft = th.offsetLeft - 480; }
+}
+$("#tabs").addEventListener("click", e => { const b = e.target.closest("button[data-view]"); if(b && S) selectTab(b.dataset.view); });
+
+function openSync(){ $("#syncUrl").value = S.sourceUrl || DEFAULT_URL; $("#syncFallback").hidden = true; $("#dlgSync").showModal(); }
+
+/* Header & menu */
+$("#btnOpen").onclick = openFile;
+$("#btnSave").onclick = save;
+$("#btnMenu").onclick = e => { e.stopPropagation(); const m = $("#menu"); m.hidden = !m.hidden; $("#btnMenu").setAttribute("aria-expanded", !m.hidden); };
+document.addEventListener("click", e => { if(!e.target.closest("#menu")) $("#menu").hidden = true; });
+$("#menu").addEventListener("click", e => {
+  const a = e.target.closest("button")?.dataset.act; if(!a) return;
+  $("#menu").hidden = true;
+  if(a === "theme"){ const cur = document.documentElement.dataset.theme || (matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light"); const n = cur === "dark" ? "light" : "dark"; document.documentElement.dataset.theme = n; try{localStorage.setItem(LS_THEME,n);}catch(e){} return; }
+  if(a === "new") return newFile();
+  if(!S) return toast("Ouvrez d'abord un fichier.");
+  ({saveas:saveAs, sync:openSync, excel:exportExcel, newyear:newYear})[a]?.();
+});
+document.addEventListener("keydown", e => { if((e.ctrlKey||e.metaKey) && e.key.toLowerCase() === "s"){ e.preventDefault(); save(); } });
+
+/* Welcome */
+$("#wOpen").onclick = openFile;
+$("#wNew").onclick = newFile;
+$("#fileInput").onchange = e => { const f = e.target.files[0]; if(f) readFileObject(f); e.target.value = ""; };
+const drop = $("#drop");
+["dragenter","dragover"].forEach(ev => document.addEventListener(ev, e => { e.preventDefault(); drop.classList.add("over"); }));
+["dragleave","drop"].forEach(ev => document.addEventListener(ev, e => { e.preventDefault(); if(ev==="drop" || !e.relatedTarget) drop.classList.remove("over"); }));
+document.addEventListener("drop", async e => {
+  const item = [...(e.dataTransfer?.items || [])].find(i => i.kind === "file");
+  if(!item) return;
+  if(item.getAsFileSystemHandle){
+    const h = await item.getAsFileSystemHandle();
+    if(h && h.kind === "file"){
+      try{ const text = await (await h.getFile()).text(); const json = JSON.parse(text);
+        if(json.app === "unipop-declarations"){ loadData(json, h.name); await setHandle(h); dirty=false; lastSaved=new Date(); updateFileState(); toast("Fichier ouvert : " + h.name); }
+        else if(S) mergeTeachers(json); else toast("Ce fichier n'est pas un fichier de déclarations UniPop.");
+      }catch(err){ toast(err instanceof SyntaxError ? "Ce fichier n'est pas un JSON valide." : err.message); }
+      return;
+    }
+  }
+  const f = item.getAsFile();
+  try{ const json = JSON.parse(await f.text()); if(json.app === "unipop-declarations") readFileObject(f); else if(S) mergeTeachers(json); }catch(err){ toast("Ce fichier n'est pas un JSON valide."); }
+});
+
+/* Grids: status segments, remarks, removal, month fill */
+document.addEventListener("click", e => {
+  const seg = e.target.closest(".seg"); if(seg){ cycle(seg, e.shiftKey); return; }
+  const rm = e.target.closest("[data-remove]"); if(rm){ removeMensuel(rm.dataset.remove); return; }
+  const fill = e.target.closest("[data-fill]"); if(fill){ fillMonth(+fill.dataset.fill); return; }
+  const del = e.target.closest("[data-del]");
+  if(del){ const f = byId(del.dataset.del);
+    confirmDlg("Supprimer ce formateur ?", `${fullName(f)} et tous ses statuts sont supprimés de ce fichier.${f.source==="json" ? " S'il figure encore dans trainings.json, il reviendra à la prochaine actualisation." : ""}`, () => {
+      S.formateurs = S.formateurs.filter(x => x.id !== f.id); delete S.mensuel[f.id]; delete S.mensuelArchive[f.id]; delete S.trimestriel[f.id]; touch(); renderAll(); });
+  }
+});
+document.addEventListener("change", e => {
+  const t = e.target;
+  if(t.dataset.mrem !== undefined){
+    const id = t.dataset.mrem, f = byId(id), v = t.value.trim();
+    S.mensuel[id].remarque = (v === (f.remarque || "")) ? null : v;
+    t.classList.toggle("inherited", S.mensuel[id].remarque === null); touch();
+  } else if(t.dataset.frem !== undefined){
+    byId(t.dataset.frem).remarque = t.value.trim(); touch();
+  } else if(t.dataset.track !== undefined){
+    const id = t.dataset.track;
+    if(t.checked) addMensuel(id); else { S.mensuelArchive[id] = S.mensuel[id]; delete S.mensuel[id]; touch(); renderAll(); }
+  }
+});
+document.addEventListener("keydown", e => { if(e.key === "Enter" && e.target.matches(".rem input")) e.target.blur(); });
+
+/* Filters */
+$("#qMens").oninput = renderMens;
+$("#qTrim").oninput = renderTrim;
+$("#qForm").oninput = renderForm;
+$("#fTrim").onclick = e => { const b = e.target.closest(".chip"); if(!b) return; trimFilter = b.dataset.f; document.querySelectorAll("#fTrim .chip").forEach(c => c.setAttribute("aria-pressed", c === b)); renderTrim(); };
+
+/* Add-to-monthly combobox */
+const addInput = $("#addInput"), addList = $("#addList");
+let addSel = 0, addMatches = [];
+function showAdd(){
+  const q = addInput.value.trim().toLowerCase();
+  addMatches = S.formateurs.filter(f => !S.mensuel[f.id] && (!q || fullName(f).toLowerCase().includes(q))).slice(0, 10);
+  addSel = 0;
+  addList.innerHTML = addMatches.length ? addMatches.map((f,i) => `<li role="option" data-id="${esc(f.id)}" aria-selected="${i===0}"><span><b>${esc(f.nom)}</b> ${esc(f.prenom)}</span><small>${esc(f.remarque)}</small></li>`).join("") : `<li class="empty">Aucun formateur trouvé</li>`;
+  addList.hidden = false; addInput.setAttribute("aria-expanded","true");
+}
+function hideAdd(){ addList.hidden = true; addInput.setAttribute("aria-expanded","false"); }
+addInput.addEventListener("focus", showAdd);
+addInput.addEventListener("input", showAdd);
+addInput.addEventListener("keydown", e => {
+  if(addList.hidden) return;
+  if(e.key === "ArrowDown" || e.key === "ArrowUp"){ e.preventDefault(); addSel = (addSel + (e.key==="ArrowDown"?1:-1) + addMatches.length) % Math.max(addMatches.length,1); [...addList.children].forEach((li,i) => li.setAttribute("aria-selected", i===addSel)); addList.children[addSel]?.scrollIntoView({block:"nearest"}); }
+  if(e.key === "Enter" && addMatches[addSel]){ e.preventDefault(); addMensuel(addMatches[addSel].id); addInput.value = ""; showAdd(); }
+  if(e.key === "Escape"){ hideAdd(); addInput.blur(); }
+});
+addList.addEventListener("mousedown", e => { const li = e.target.closest("li[data-id]"); if(li){ e.preventDefault(); addMensuel(li.dataset.id); addInput.value = ""; showAdd(); } });
+addInput.addEventListener("blur", () => setTimeout(hideAdd, 120));
+
+/* Formateurs tab */
+$("#btnSync").onclick = openSync;
+$("#autoSyncStatus").onclick = () => {
+  if(!S) return;
+  if(syncFailure) openSync();
+  else autoSyncTeachers({force:true,notify:true});
+};
+$("#syncGo").onclick = syncFromUrl;
+$("#syncFile").onclick = () => $("#syncInput").click();
+$("#syncInput").onchange = async e => {
+  const f = e.target.files[0]; e.target.value = ""; if(!f) return;
+  try{ const json = JSON.parse(await f.text()); $("#dlgSync").close(); mergeTeachers(json); }
+  catch(err){ toast(err instanceof SyntaxError ? "Ce fichier n'est pas un JSON valide." : err.message); }
+};
+$("#btnAddForm").onclick = () => { ["#addNom","#addPrenom","#addRem"].forEach(s => $(s).value = ""); $("#dlgAdd").showModal(); $("#addNom").focus(); };
+$("#addGo").onclick = () => {
+  const nom = $("#addNom").value.trim().toUpperCase(), prenom = $("#addPrenom").value.trim();
+  if(!nom){ $("#addNom").focus(); return; }
+  const id = keyOf(nom, prenom);
+  if(byId(id)){ toast("Ce formateur existe déjà."); return; }
+  S.formateurs.push({id, nom, prenom, remarque:$("#addRem").value.trim(), source:"local"});
+  sortForm(); $("#dlgAdd").close(); touch(); renderAll(); toast(nom + " " + prenom + " ajouté");
+};
+
+/* ================= Start ================= */
+(async function init(){
+  try{ const th = localStorage.getItem(LS_THEME); if(th) document.documentElement.dataset.theme = th; }catch(e){}
+  try{ const raw = localStorage.getItem(LS_KEY); if(raw) S = normalize(JSON.parse(raw)); }catch(e){ S = null; }
+  if(fsSupported){
+    const h = await idbGet("handle");
+    if(h){
+      fileName = h.name;
+      try{
+        if((await h.queryPermission({mode:"readwrite"})) === "granted"){ handle = h; const fd = normalize(JSON.parse(await (await h.getFile()).text())); if(!S || new Date(fd.modifie) >= new Date(S.modifie)) S = fd; lastSaved = new Date(); }
+        else needsReconnect = h;
+      }catch(e){ needsReconnect = null; }
+    }
+  }
+  renderAll();
+  updateSyncStatus(S?.derniereSynchro ? "idle" : "idle");
+  if(S) autoSyncTeachers({force:true});
+})();
+setInterval(() => { if(S && !document.hidden) autoSyncTeachers(); }, AUTO_SYNC_INTERVAL_MS);
+window.addEventListener("online", () => { if(S) autoSyncTeachers({force:true}); });
+document.addEventListener("visibilitychange", () => {
+  if(S && !document.hidden) autoSyncTeachers();
+});
+})();
+</script>
+</body>
+</html>
